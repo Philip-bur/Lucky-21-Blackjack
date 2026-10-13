@@ -1,4 +1,4 @@
-## Spielidee
+## Lucky 21 Description
 
 Der Spieler startet mit einem Guthaben von 100 Chips und tritt gegen den
 Dealer an. Ziel ist es, mit den eigenen Karten möglichst nahe an 21 Punkte
@@ -6,7 +6,7 @@ zu kommen, ohne 21 zu überschreiten.
 
 Eine Runde soll sich an folgendem Ablauf orientieren:
 
-```text
+```
 ========================================
            BLACKJACK CONSOLE
 ========================================
@@ -33,18 +33,9 @@ Was möchtest du tun?
 Auswahl: 
 ```
 
-## Geplante Spielregeln
-
-- Ein Standarddeck mit 52 Karten wird verwendet.
-- Zahlenkarten zählen ihren Kartenwert.
-- Bube, Dame und König zählen jeweils 10 Punkte.
-- Ein Ass zählt als 1 oder 11 Punkte, je nachdem, was für die Hand
-  vorteilhafter ist.
-- Der Dealer zieht Karten, bis er mindestens 17 Punkte erreicht.
-- Ein Blackjack soll mit einer höheren Auszahlung belohnt werden.
-- Bei einem Gleichstand soll der Einsatz zurückgegeben werden.
+## How to run 
+Open the project in IntelliJ or another IDE and run main.java
 
 
-## Autor
-
+## Author
 @Philip-bur / Philip Buranich / wi26b160
