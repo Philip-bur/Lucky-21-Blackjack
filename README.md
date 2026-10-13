@@ -1,4 +1,4 @@
-## Lucky 21 Description
+# Lucky 21 Description
 
 Der Spieler startet mit einem Guthaben von 100 Chips und tritt gegen den
 Dealer an. Ziel ist es, mit den eigenen Karten möglichst nahe an 21 Punkte
@@ -33,9 +33,9 @@ Was möchtest du tun?
 Auswahl: 
 ```
 
-## How to run 
+### How to run 
 Open the project in IntelliJ or another IDE and run main.java
 
 
-## Author
+### Author
 @Philip-bur / Philip Buranich / wi26b160
