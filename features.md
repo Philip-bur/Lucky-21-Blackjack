@@ -28,3 +28,5 @@
 - Highscore-Liste
 - Farbige Konsolenausgabe
 - Auswahl zwischen mehreren Spielrunden
+- mehrere Gamemodes (Poker...)
+
