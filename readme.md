@@ -10,4 +10,4 @@ QuizQuest ist eine Quiz-App für Studierende.
 - Neue Quizze hinzufügen
 
 ## Autor
-@Philip-bur
+@Philip-bur / Philip Buranich / wi26b160
