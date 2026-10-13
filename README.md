@@ -9,10 +9,5 @@ QuizQuest ist eine Quiz-App für Studierende.
 - Ergebnisse speichern
 - Neue Quizze hinzufügen
 
-## Projektdateien
-- `readme.md`: Projektbeschreibung inkl. Autor
-- `features.md`: Nummerierte Übersicht der Features
-- `agents.md`: Grundlegende Agent-Anweisungen
-
 ## Autor
-@Philip-bur
+@Philip-bur / Philip Buranich / wi26b160
