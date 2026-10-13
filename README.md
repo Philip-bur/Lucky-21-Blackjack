@@ -1,49 +1,59 @@
-# QuizQuest Description
+# Blackjack Console
 
-QuizQuest ist eine einfache Quiz-Plattform, die sich am Grundprinzip von Kahoot
-orientiert. Nutzer sollen eigene Quizze mit mehreren Fragen erstellen und diese
-anschließend entweder nur lokal verwenden oder öffentlich für andere Nutzer
-bereitstellen können.
+QuizQuest wird zu einem einfachen, textbasierten Blackjack-Spiel fuer die
+Konsole umgestaltet. In dieser Phase besteht das Projekt bewusst nur aus
+Dokumentation. Die Umsetzung des Spiels folgt spaeter.
 
-Die Anwendung soll bewusst einfach und übersichtlich aufgebaut sein. Im
-Vordergrund stehen das Erstellen, Spielen und Auswerten von Quizzen. Beim
-Beantworten der Fragen sollen Punkte gesammelt werden. Nach einem Quiz sollen
-die erreichten Punkte und die Platzierung angezeigt werden.
+## Spielidee
 
-Wenn es mit vertretbarem Aufwand möglich ist, soll ein Quiz auch gemeinsam mit
-anderen gespielt werden können. Dafür könnten sich mehrere Spieler einem Quiz
-anschließen und die Fragen gleichzeitig beantworten. Eine Bestenliste soll die
-Ergebnisse vergleichen und einen Highscore anzeigen.
+Der Spieler startet mit einem Guthaben von 100 Chips und tritt gegen den
+Dealer an. Ziel ist es, mit den eigenen Karten moeglichst nahe an 21 Punkte
+zu kommen, ohne 21 zu ueberschreiten.
 
+Eine Runde soll sich an folgendem Ablauf orientieren:
 
-## Ziel
+```text
+========================================
+           BLACKJACK CONSOLE
+========================================
 
-Das Ziel ist eine leicht verständliche Quiz-Anwendung, mit der man schnell
-eigene Quizze erstellen und alleine oder möglichst auch gemeinsam mit anderen
-spielen kann. Funktionen wie das öffentliche Teilen, das Highscore-Board und
-der gemeinsame Spielmodus werden schrittweise ergänzt, sofern sie im Rahmen
-des Projekts umsetzbar sind.
+Willkommen bei Blackjack!
 
+Dein Guthaben: 100 Chips
+Einsatz eingeben: 20
 
-## To-Do-Liste
+----------------------------------------
+Dealer:
+[ ?? ] [  K  ]
 
-- [ ] Grundaufbau der Anwendung erstellen
-- [ ] Datenmodell für Quizze, Fragen, Antworten und Ergebnisse planen
-- [ ] Quiz-Übersicht mit verfügbaren Quizzen umsetzen
-- [ ] Ansicht zum Spielen eines Quiz erstellen
-- [ ] Punkteberechnung und Auswertung implementieren
-- [ ] Funktion zum Erstellen eigener Quizze entwickeln
-- [ ] Fragen, Antwortmöglichkeiten und richtige Antworten verwalten
-- [ ] Lokales Speichern von Quizzen ermöglichen
-- [ ] Öffentliche Quizze und deren Sichtbarkeit umsetzen
-- [ ] Highscore-Board und Platzierungen ergänzen
-- [ ] Ergebnisse dauerhaft speichern
-- [ ] Prüfen, ob ein gemeinsamer Spielmodus technisch umsetzbar ist
-- [ ] Optional: Beitritt zu einem gemeinsamen Quiz über einen Code ermöglichen
-- [ ] Optional: Live-Fragen, Live-Punkte und Live-Platzierungen ergänzen
-- [ ] Benutzeroberfläche einfach und verständlich gestalten
-- [ ] Funktionen testen und Fehler beheben
+Deine Karten:
+[  8  ] [  7  ]        Punktzahl: 15
+----------------------------------------
 
+Was moechtest du tun?
+
+1. Karte ziehen
+2. Halten
+3. Spiel beenden
+
+Auswahl: 1
+```
+
+## Geplante Spielregeln
+
+- Ein Standarddeck mit 52 Karten wird verwendet.
+- Zahlenkarten zaehlen ihren Kartenwert.
+- Bube, Dame und Koenig zaehlen jeweils 10 Punkte.
+- Ein Ass zaehlt als 1 oder 11 Punkte, je nachdem, was fuer die Hand
+  vorteilhafter ist.
+- Der Dealer zieht Karten, bis er mindestens 17 Punkte erreicht.
+- Ein Blackjack soll mit einer hoeheren Auszahlung belohnt werden.
+- Bei einem Gleichstand soll der Einsatz zurueckgegeben werden.
+
+## Projektstatus
+
+Aktuell enthaelt das Projekt nur die Textdateien `README.md`, `features.md`
+und `agents.md`. Es gibt noch keinen Programmcode und keine Python-Datei.
 
 ## Autor
 
