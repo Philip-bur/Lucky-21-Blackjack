@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
-public class main {
+public class Main {
     private static final int STARTING_CHIPS = 100;
     private static final int DECK_SIZE = 52;
+    private static final int MAX_HAND_SIZE = 12;
 
     private static class Card {
         String symbol;
@@ -28,16 +29,18 @@ public class main {
             int bet = readBet(scanner, chips);
 
             if (bet == 0) {
-                playing = false;
                 break;
             }
 
             shuffleDeck(deck);
             chips -= bet;
-            playing = playRound(scanner, deck, bet, chips);
+            int roundResult = playRound(scanner, deck, bet, chips);
 
-            if (playing) {
-                chips = chipsAfterRound;
+            if (roundResult < 0) {
+                playing = false;
+            } else {
+                chips = roundResult;
+                playing = askForAnotherRound(scanner, chips);
             }
         }
 
@@ -49,11 +52,9 @@ public class main {
         scanner.close();
     }
 
-    private static int chipsAfterRound;
-
-    private static boolean playRound(Scanner scanner, Card[] deck, int bet, int chips) {
-        Card[] playerHand = new Card[12];
-        Card[] dealerHand = new Card[12];
+    private static int playRound(Scanner scanner, Card[] deck, int bet, int chips) {
+        Card[] playerHand = new Card[MAX_HAND_SIZE];
+        Card[] dealerHand = new Card[MAX_HAND_SIZE];
         int playerCount = 0;
         int dealerCount = 0;
         int nextCard = 0;
@@ -65,13 +66,10 @@ public class main {
 
         int playerScore = handValue(playerHand, playerCount);
         int dealerScore = handValue(dealerHand, dealerCount);
-        boolean playerBlackjack = playerScore == 21;
-        boolean dealerBlackjack = dealerScore == 21;
 
-        if (playerBlackjack || dealerBlackjack) {
+        if (playerScore == 21 || dealerScore == 21) {
             printTable(dealerHand, dealerCount, playerHand, playerCount, true);
-            chipsAfterRound = settleBlackjack(chips, bet, playerBlackjack, dealerBlackjack);
-            return askForAnotherRound(scanner, chipsAfterRound);
+            return settleBlackjack(chips, bet, playerScore == 21, dealerScore == 21);
         }
 
         boolean playerStands = false;
@@ -85,8 +83,8 @@ public class main {
             } else if (choice == 2) {
                 playerStands = true;
             } else {
-                chipsAfterRound = chips;
-                return false;
+                System.out.println("Die Runde wurde beendet.");
+                return -1;
             }
         }
 
@@ -98,18 +96,17 @@ public class main {
 
         dealerScore = handValue(dealerHand, dealerCount);
         printTable(dealerHand, dealerCount, playerHand, playerCount, true);
-        chipsAfterRound = settleRound(chips, bet, playerScore, dealerScore);
-        return askForAnotherRound(scanner, chipsAfterRound);
+        return settleRound(chips, bet, playerScore, dealerScore);
     }
 
     private static int settleBlackjack(int chips, int bet, boolean playerBlackjack,
-            boolean dealerBlackjack) {
+                                       boolean dealerBlackjack) {
         if (playerBlackjack && dealerBlackjack) {
             System.out.println("Gleichstand! Dein Einsatz wird zurueckgegeben.");
             return chips + bet;
         }
         if (playerBlackjack) {
-            int winnings = bet + (bet * 3 / 2);
+            int winnings = bet + bet * 3 / 2;
             System.out.println("Blackjack! Du gewinnst " + winnings + " Chips.");
             return chips + winnings;
         }
@@ -123,7 +120,7 @@ public class main {
             return chips;
         }
         if (dealerScore > 21 || playerScore > dealerScore) {
-            System.out.println("Du gewinnst " + (bet * 2) + " Chips!");
+            System.out.println("Du gewinnst " + bet * 2 + " Chips!");
             return chips + bet * 2;
         }
         if (playerScore == dealerScore) {
@@ -136,7 +133,7 @@ public class main {
 
     private static boolean askForAnotherRound(Scanner scanner, int chips) {
         if (chips == 0) {
-            return true;
+            return false;
         }
         System.out.print("\nNoch eine Runde spielen? (j/n): ");
         String answer = scanner.nextLine().trim().toLowerCase();
@@ -147,15 +144,17 @@ public class main {
         while (true) {
             System.out.print("Einsatz eingeben (0 zum Beenden): ");
             String input = scanner.nextLine().trim();
+
             try {
                 int bet = Integer.parseInt(input);
                 if (bet >= 0 && bet <= chips) {
                     return bet;
                 }
             } catch (NumberFormatException exception) {
-                // Die Eingabe wird unten erneut abgefragt.
+                // Bei einer falschen Eingabe wird die Frage wiederholt.
             }
-            System.out.println("Bitte gib einen gueltigen Einsatz zwischen 0 und " + chips + " ein.");
+
+            System.out.println("Bitte gib einen Einsatz zwischen 0 und " + chips + " ein.");
         }
     }
 
@@ -163,26 +162,30 @@ public class main {
         while (true) {
             System.out.print("Auswahl: ");
             String input = scanner.nextLine().trim();
+
             try {
                 int choice = Integer.parseInt(input);
                 if (choice >= 1 && choice <= 3) {
                     return choice;
                 }
             } catch (NumberFormatException exception) {
-                // Die Eingabe wird unten erneut abgefragt.
+                // Bei einer falschen Eingabe wird die Frage wiederholt.
             }
+
             System.out.println("Bitte waehle 1, 2 oder 3.");
         }
     }
 
     private static void printTable(Card[] dealerHand, int dealerCount, Card[] playerHand,
-            int playerCount, boolean revealDealer) {
+                                   int playerCount, boolean revealDealer) {
         System.out.println("\n----------------------------------------");
         System.out.println("Dealer:");
         System.out.print("[ " + (revealDealer ? dealerHand[0].symbol : "??") + " ] ");
+
         for (int cardIndex = 1; cardIndex < dealerCount; cardIndex++) {
             System.out.print("[ " + dealerHand[cardIndex].symbol + " ] ");
         }
+
         if (revealDealer) {
             System.out.println("       Punktzahl: " + handValue(dealerHand, dealerCount));
         } else {
@@ -207,12 +210,15 @@ public class main {
     private static int handValue(Card[] hand, int cardCount) {
         int score = 0;
         int aces = 0;
+
         for (int cardIndex = 0; cardIndex < cardCount; cardIndex++) {
             score += hand[cardIndex].value;
             if (hand[cardIndex].value == 11) {
                 aces++;
             }
         }
+
+        // Ein Ass zaehlt als 1 statt 11, wenn die Hand sonst ueber 21 waere.
         while (score > 21 && aces > 0) {
             score -= 10;
             aces--;
@@ -222,7 +228,8 @@ public class main {
 
     private static Card[] createDeck() {
         String[] suits = { "H", "D", "C", "S" };
-        String[] symbols = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+        String[] symbols = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                "J", "Q", "K" };
         Card[] deck = new Card[DECK_SIZE];
         int cardIndex = 0;
 
@@ -246,7 +253,7 @@ public class main {
 
     private static void printHeader() {
         System.out.println("========================================");
-        System.out.println("           BLACKJACK CONSOLE");
+        System.out.println("           LUCKY 21 - BLACKJACK");
         System.out.println("========================================\n");
     }
 }
